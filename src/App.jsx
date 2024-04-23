@@ -1,6 +1,7 @@
+import "./layout.scss";
+
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return <div className="layout">Hello</div>;
 };
 
-// 6:39
 export default HomePage;

@@ -1,0 +1,28 @@
+@import "./responsive.scss";
+
+// the layout has spacing from left and right of the page
+.layout {
+  height: 100vh;
+  max-width: 1366px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  //   here is utilize the media query breakpoints to add css
+
+  @include large {
+    background-color: red;
+    max-width: 1280px;
+  }
+
+  @include desktop {
+    background-color: green;
+    max-width: 768px;
+  }
+
+  @include phone {
+    max-width: 640px;
+    background-color: teal;
+  }
+}

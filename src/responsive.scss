@@ -1,0 +1,20 @@
+// This file contains media queries the first one is for small screens
+@mixin phone{
+    @media (max-width: 738px) {
+        @content;
+    }
+}
+
+// for desktop screens
+@mixin desktop{
+    @media (max-width: 1024px) {
+        @content;
+    }
+}
+
+// for large screens
+@mixin large{
+    @media (max-width: 1366px) {
+        @content;
+    }
+}
