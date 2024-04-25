@@ -1,21 +1,38 @@
-import "./layout.scss";
-import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./routes/HomePage/HomePage";
+import Layout from "./routes/Layout/Layout";
+import ListPage from "./routes/ListPage/ListPage";
+import Login from "./routes/Login/Login";
+import SinglePage from "./routes/SinglePage/SinglePage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// Adding navigation with by using react-router-dom element Layout is the first object wrapping other object elements as children
 
 const AppPage = () => {
-  return (
-    <div className="layout">
-      <div className="Navbar">
-        {/* First component */}
-        <Navbar />
-      </div>
-
-      <div className="content F">
-        {/* First route */}
-        <HomePage />
-      </div>
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
+        {
+          path: "/list",
+          element: <ListPage />,
+        },
+        {
+          path: "/:id",
+          element: <SinglePage />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+      ],
+    },
+  ]);
+  return <RouterProvider router={router} />;
 };
 
 export default AppPage;
