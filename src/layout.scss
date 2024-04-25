@@ -8,21 +8,27 @@
   margin-right: auto;
   padding-left: 20px;
   padding-right: 20px;
+  display: flex;
+  flex-direction: column;
 
   //   here is utilize the media query breakpoints to add css
 
   @include large {
-    background-color: red;
+    // background-color: red;
     max-width: 1280px;
   }
 
   @include desktop {
-    background-color: green;
+    // background-color: green;
     max-width: 768px;
   }
 
   @include phone {
     max-width: 640px;
-    background-color: teal;
+    // background-color: teal;
+  }
+
+  .content {
+    flex: 1;
   }
 }
