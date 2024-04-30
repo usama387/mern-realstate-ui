@@ -1,8 +1,9 @@
+/* eslint-disable react/no-unknown-property */
 import Filter from "../../components/Filter/Filter";
 import { listData } from "../../lib/data";
 import Card from "../../components/Card/Card";
-import Location from "../../components/location/locaction";
 import "./ListPage.scss";
+import Map from "../../components/map/Map";
 
 const ListPage = () => {
   // dummy data in data.js file to map here
@@ -23,7 +24,7 @@ const ListPage = () => {
       </div>
       <div className="mapContainer">
         {/* Data is being passed as prop to share locations to map */}
-        <Location items={data} />
+        <Map items={data} />
       </div>
     </div>
   );
