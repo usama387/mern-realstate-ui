@@ -2,6 +2,7 @@ import HomePage from "./routes/HomePage/HomePage";
 import Layout from "./routes/Layout/Layout";
 import ListPage from "./routes/ListPage/ListPage";
 import Login from "./routes/Login/Login";
+import ProfilePage from "./routes/ProfilePage/ProfilePage";
 import SinglePage from "./routes/SinglePage/SinglePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -28,6 +29,10 @@ const AppPage = () => {
         {
           path: "/login",
           element: <Login />,
+        },
+        {
+          path: "/profile",
+          element: <ProfilePage />,
         },
       ],
     },
