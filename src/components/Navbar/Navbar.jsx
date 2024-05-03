@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import "./Navbar.scss";
 import { Link } from "react-router-dom";
 
@@ -6,7 +7,8 @@ const Navbar = () => {
   // managing appearance of menu useState hook
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const user = true;
+  // To get logged in user details and show it in navbar
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <nav>
@@ -25,13 +27,10 @@ const Navbar = () => {
 
       {/* Right div contains auth buttons and menu icon visible on smaller devices */}
       <div className="right">
-        {user ? (
+        {currentUser ? (
           <div className="user">
-            <img
-              src="https://images.pexels.com/photos/12954030/pexels-photo-12954030.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-              alt="user"
-            />
-            <span>Usama Razaaq</span>
+            <img src={currentUser.avatar || "/noavatar.jpg"} alt="user" />
+            <span>{currentUser.username}</span>
             <Link to="/profile" className="profile">
               <div className="notification">3</div>
               <span>Profile</span>
@@ -39,8 +38,8 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <a href="/">Sign In</a>
-            <a href="/" className="register">
+            <a href="/login">Sign In</a>
+            <a href="/register" className="register">
               Sign Up
             </a>
           </>

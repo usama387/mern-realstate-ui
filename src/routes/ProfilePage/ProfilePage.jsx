@@ -3,17 +3,21 @@ import List from "../../components/List/List";
 import axios from "axios";
 import "./ProfilePage.scss";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const ProfilePage = () => {
+  //to redirect user after logout
   const navigate = useNavigate();
+
+  // getting current user and updateUser
+  const { updateUser, currentUser } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
-      const res = axios.post("http://localhost:8700/api/auth/logout");
+      await axios.post("http://localhost:8700/api/auth/logout");
 
-      console.log(res);
-
-      localStorage.removeItem("user");
+      updateUser(null);
 
       navigate("/");
     } catch (error) {
@@ -32,16 +36,13 @@ const ProfilePage = () => {
           <div className="info">
             <span>
               Avatar :
-              <img
-                src="https://images.pexels.com/photos/12954030/pexels-photo-12954030.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-                alt="user"
-              />
+              <img src={currentUser.avatar || "/noavatar.jpg"} alt="user" />
             </span>
             <span>
-              Username:<b>Usama Razaaq</b>
+              Username:<b>{currentUser.username}</b>
             </span>
             <span>
-              Email: <b>usamarazaaq3@gamil.com</b>
+              Email: <b>{currentUser.email}</b>
             </span>
             <button onClick={handleLogout}>Logout</button>
           </div>

@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Link, useNavigate,  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
 const Login = () => {
@@ -10,6 +11,9 @@ const Login = () => {
 
   // hook to redirect user on login after registeration
   const navigate = useNavigate();
+
+  // To get logged in user details
+  const { updateUser } = useContext(AuthContext);
 
   // handling form submission
   const handleSubmit = async (e) => {
@@ -33,7 +37,9 @@ const Login = () => {
         password,
       });
 
-      localStorage.setItem("user", JSON.stringify(res.data));
+      console.log(res);
+
+      updateUser(res.data);
 
       navigate("/");
     } catch (error) {
