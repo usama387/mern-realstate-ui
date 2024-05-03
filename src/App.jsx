@@ -3,6 +3,7 @@ import Layout from "./routes/Layout/Layout";
 import ListPage from "./routes/ListPage/ListPage";
 import Login from "./routes/Login/Login";
 import ProfilePage from "./routes/ProfilePage/ProfilePage";
+import Register from "./routes/Register/Register";
 import SinglePage from "./routes/SinglePage/SinglePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -33,6 +34,10 @@ const AppPage = () => {
         {
           path: "/profile",
           element: <ProfilePage />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },
