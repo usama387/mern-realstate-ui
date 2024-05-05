@@ -1,5 +1,5 @@
 import HomePage from "./routes/HomePage/HomePage";
-import Layout from "./routes/Layout/Layout";
+import { Layout, RequireAuth } from "./routes/Layout/Layout";
 import ListPage from "./routes/ListPage/ListPage";
 import Login from "./routes/Login/Login";
 import ProfilePage from "./routes/ProfilePage/ProfilePage";
@@ -7,7 +7,7 @@ import Register from "./routes/Register/Register";
 import SinglePage from "./routes/SinglePage/SinglePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// Adding navigation with by using react-router-dom element Layout is the first object wrapping other object elements as children
+// Adding navigation with by using react-router-dom element Layout is the first object layout wrapping other object elements as children in this layout authentication is not required everybody can visit these pages
 
 const AppPage = () => {
   const router = createBrowserRouter([
@@ -32,12 +32,20 @@ const AppPage = () => {
           element: <Login />,
         },
         {
-          path: "/profile",
-          element: <ProfilePage />,
-        },
-        {
           path: "/register",
           element: <Register />,
+        },
+      ],
+    },
+
+    // My second layout containing protected routes that require authentication
+    {
+      path: "/",
+      element: <RequireAuth />,
+      children: [
+        {
+          path: "/profile",
+          element: <ProfilePage />,
         },
       ],
     },
