@@ -3,13 +3,19 @@ import "./ProfileUpdatePage.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import UploadWidget from "../../components/UploadWidget/UploadWidget";
 
 const ProfileUpdatePage = () => {
+  // currentUser to get details and update for updating user
+  const { currentUser, updateUser } = useContext(AuthContext);
+
   // managing error state
   const [error, setError] = useState("");
 
-  const { currentUser, updateUser } = useContext(AuthContext);
+  // managing state for avatars
+  const [avatar, setAvatar] = useState(currentUser.avatar);
 
+  // to navigate after profile update
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,13 +33,14 @@ const ProfileUpdatePage = () => {
           username,
           email,
           password,
+          avatar: avatar[0],
         }
       );
       updateUser(res.data);
       navigate("/profile");
     } catch (err) {
-      console.log(err);
-      setError(err.response.data.message);
+      console.error("Error updating user:", err);
+      setError(err.response?.data?.message || "Failed to update user.");
     }
   };
 
@@ -70,20 +77,20 @@ const ProfileUpdatePage = () => {
       </div>
       <div className="sideContainer">
         <img
-          src={currentUser.avatar || "/noavatar.jpg"}
-          alt=""
+          src={avatar || "/noavatar.jpg"}
+          alt="userAvatar"
           className="avatar"
         />
-        {/* <UploadWidget
+        <UploadWidget
           uwConfig={{
-            cloudName: "lamadev",
-            uploadPreset: "estate",
+            cloudName: "dobx9mwft",
+            uploadPreset: "mern-realstate",
             multiple: false,
             maxImageFileSize: 2000000,
             folder: "avatars",
           }}
           setState={setAvatar}
-        /> */}
+        />
       </div>
     </div>
   );
