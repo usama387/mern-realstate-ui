@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
-
+import apiRequestUrl from "../../lib/apiRequestUrl";
 const Login = () => {
   // managing api loading state
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +30,8 @@ const Login = () => {
     const password = formData.get("password");
 
     try {
-      // now using axios making a post request to register user in the db
-      const res = await axios.post("http://localhost:8700/api/auth/login", {
+      // now using axios making a post request to login
+      const res = await apiRequestUrl.post("/auth/login", {
         username,
         password,
       });
