@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import "./ProfileUpdatePage.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiRequestUrl from "../../lib/apiRequestUrl";
 import UploadWidget from "../../components/UploadWidget/UploadWidget";
 
 const ProfileUpdatePage = () => {
@@ -13,34 +13,29 @@ const ProfileUpdatePage = () => {
   const [error, setError] = useState("");
 
   // managing state for avatars
-  const [avatar, setAvatar] = useState(currentUser.avatar);
+  const [avatar, setAvatar] = useState([]);
 
   // to navigate after profile update
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // to reach the inputs using their names
     const formData = new FormData(e.target);
 
     const { username, email, password } = Object.fromEntries(formData);
 
     try {
-      const res = await axios.put(
-        `http://localhost:8700/api/users/${currentUser.id}`,
-        {
-          username,
-          email,
-          password,
-          avatar: avatar[0],
-        }
-      );
+      const res = await apiRequestUrl.put(`/users/${currentUser.id}`, {
+        username,
+        email,
+        password,
+        avatar: avatar[0],
+      });
       updateUser(res.data);
       navigate("/profile");
     } catch (err) {
-      console.error("Error updating user:", err);
-      setError(err.response?.data?.message || "Failed to update user.");
+      console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -77,7 +72,7 @@ const ProfileUpdatePage = () => {
       </div>
       <div className="sideContainer">
         <img
-          src={avatar || "/noavatar.jpg"}
+          src={avatar[0] || currentUser.avatar || "/noavatar.jpg"}
           alt="userAvatar"
           className="avatar"
         />

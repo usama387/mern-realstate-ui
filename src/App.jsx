@@ -2,6 +2,7 @@ import HomePage from "./routes/HomePage/HomePage";
 import { Layout, RequireAuth } from "./routes/Layout/Layout";
 import ListPage from "./routes/ListPage/ListPage";
 import Login from "./routes/Login/Login";
+import NewPostPage from "./routes/NewPostPage/NewPostPage";
 import ProfilePage from "./routes/ProfilePage/ProfilePage";
 import ProfileUpdatePage from "./routes/ProfileUpdatePage/ProfileUpdatePage";
 import Register from "./routes/Register/Register";
@@ -51,6 +52,10 @@ const AppPage = () => {
         {
           path: "/profile/update",
           element: <ProfileUpdatePage />,
+        },
+        {
+          path: "/addPost",
+          element: <NewPostPage />,
         },
       ],
     },
