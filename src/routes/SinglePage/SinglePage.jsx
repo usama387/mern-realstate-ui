@@ -1,33 +1,45 @@
 /* eslint-disable no-unused-vars */
+import { useLoaderData } from "react-router-dom";
 import Slider from "../../components/Slider/Slider";
 import Map from "../../components/map/Map";
 import { singlePostData, userData } from "../../lib/data";
 import "./SinglePage.scss";
+import DOMPurify from "dompurify";
 
 const SinglePage = () => {
+  // accessing single post
+  const post = useLoaderData();
+
   return (
     <div className="singlePage">
       {/* Left Side */}
       <div className="details">
         <div className="wrapper">
-          <Slider images={singlePostData.images} />
+          <Slider images={post.images} />
           <div className="info">
             <div className="top">
               <div className="post">
                 <h1>{singlePostData.title}</h1>
                 <div className="address">
                   <img src="/pin.png" alt="address" />
-                  <span>{singlePostData.address}</span>
+                  <span>{post.address}</span>
                 </div>
 
-                <div className="price">{singlePostData.price} pkr</div>
+                <div className="price">{post.price} pkr</div>
               </div>
               <div className="user">
-                <img src={userData.img} alt="user" />
-                <span>{userData.name}</span>
+                <img src={post.user.avatar} alt="user" />
+                <span>{post.user.user1name}</span>
               </div>
             </div>
-            <div className="bottom">{singlePostData.description}</div>
+
+            {/* To prevent text being rendered in html tags */}
+            <div
+              className="bottom"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(post.postDetail.desc),
+              }}
+            ></div>
           </div>
         </div>
       </div>
@@ -42,21 +54,31 @@ const SinglePage = () => {
               <img src="/utility.png" alt="utility" />
               <div className="featureText">
                 <span>Utilities</span>
-                <p>Renter is responsible</p>
+                {post.postDetail.utilities === "owner" ? (
+                  <p>Owner is responsible</p>
+                ) : (
+                  <p>Tenant is responsible</p>
+                )}
               </div>
             </div>
+
             <div className="feature">
               <img src="/pet.png" alt="utility" />
               <div className="featureText">
                 <span>Pet Policy</span>
-                <p>Pets allowed</p>
+                {post.postDetail.pet === "allowed" ? (
+                  <p>Pets allowed</p>
+                ) : (
+                  <p>Pets not allowed</p>
+                )}
               </div>
             </div>
+
             <div className="feature">
               <img src="/utility.png" alt="utility" />
               <div className="featureText">
-                <span>Rent</span>
-                <p>Must have 3x the rent in total household income</p>
+                <span>Income Policy</span>
+                {post.postDetail.income}
               </div>
             </div>
           </div>
@@ -65,15 +87,15 @@ const SinglePage = () => {
           <div className="sizes">
             <div className="size">
               <img src="/size.png" />
-              <span>80sqft</span>
+              <span>{post.postDetail.size}</span>
             </div>
             <div className="size">
               <img src="/bed.png" />
-              <span>3 beds</span>
+              <span>{post.bedroom} beds</span>
             </div>
             <div className="size">
               <img src="/bath.png" />
-              <span>1 Bathroom</span>
+              <span>{post.bathrooms} bathrooms</span>
             </div>
           </div>
 
@@ -83,27 +105,32 @@ const SinglePage = () => {
               <img src="/school.png" alt="" />
               <div className="featureText">
                 <span>School</span>
-                <p>250m away</p>
+                <p>
+                  {post.postDetail.school > 999
+                    ? post.postDetail.school / 1000 + "km"
+                    : post.postDetail.school + "m"}{" "}
+                  away
+                </p>
               </div>
             </div>
             <div className="feature">
               <img src="/pet.png" alt="" />
               <div className="featureText">
                 <span>Bus Stop</span>
-                <p>100m away</p>
+                <p>{post.postDetail.bus}m away</p>
               </div>
             </div>
             <div className="feature">
-              <img src="/fee.png" alt="" />
+              <img src="/restaurant.png" alt="" />
               <div className="featureText">
                 <span>Restaurant</span>
-                <p>200m away</p>
+                <p>{post.postDetail.restaurant}m away</p>
               </div>
             </div>
           </div>
           <p className="title">Location</p>
           <div className="mapContainer">
-            <Map items={[singlePostData]} />
+            <Map items={[post]} />
           </div>
           <div className="buttons">
             <button>
