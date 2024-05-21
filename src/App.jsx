@@ -1,4 +1,4 @@
-import { singlePageLoader } from "./lib/loaders";
+import { listPageLoader, singlePageLoader } from "./lib/loaders";
 import HomePage from "./routes/HomePage/HomePage";
 import { Layout, RequireAuth } from "./routes/Layout/Layout";
 import ListPage from "./routes/ListPage/ListPage";
@@ -25,12 +25,13 @@ const AppPage = () => {
         {
           path: "/list",
           element: <ListPage />,
+          // renders specific query is passed through url
+          loader: listPageLoader,
         },
         {
           path: "/:id",
           element: <SinglePage />,
-
-          // renders when data is fetched from db
+          // renders when single post is fetched from db
           loader: singlePageLoader,
         },
         {
